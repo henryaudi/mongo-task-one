@@ -28,7 +28,7 @@ public class Task1 {
         // Open reader
         BufferedReader reader = new BufferedReader(new FileReader("restaurant.csv"));
 
-        // Read from .csv file
+        // Read first line from .csv file
         String line = reader.readLine();
         while (line != null) {
             // Split the line into different cell values each time "," occurs
@@ -39,6 +39,7 @@ public class Task1 {
             map.put("city", item[1]);
             map.put("state", item[2]);
             Document document = new Document(map);
+            // Insert the document into Mongo database
             restaurant.insertOne(document);
             line = reader.readLine();
         }

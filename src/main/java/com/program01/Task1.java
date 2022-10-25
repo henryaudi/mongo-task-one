@@ -1,7 +1,7 @@
 package com.program01;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoCredential;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
@@ -14,18 +14,12 @@ import java.util.Map;
 
 public class Task1 {
     public static void main(String[] args) throws IOException {
+        String connectionString = System.getenv("mongodb.uri");
 
-        // Creating a Mongo client
-        MongoClient mongo = new MongoClient("localhost", 27017);
-
-        // Creating credentials
-        MongoCredential credential;
-        credential = MongoCredential.createCredential("sampleUser", "myDb",
-                "password".toCharArray());
-        System.out.println("Connected to the database successfully");
+        MongoClient mongo = MongoClients.create(connectionString);
 
         // Accessing newDB database for program 1
-        MongoDatabase newDB = mongo.getDatabase("newDB");
+        MongoDatabase newDB = mongo.getDatabase("newDb");
 
         // Accessing restaurant collections
         MongoCollection<Document> restaurant = newDB.getCollection("restaurant");
@@ -40,9 +34,9 @@ public class Task1 {
             String[] item = line.split(",");
             // Add to HashMap
             Map<String, Object> map = new HashMap<>();
-            map.put("restaurant", item[1]);
-            map.put("city", item[2]);
-            map.put("state", item[3]);
+            map.put("restaurant", item[0]);
+            map.put("city", item[1]);
+            map.put("state", item[2]);
             Document document = new Document(map);
             restaurant.insertOne(document);
             line = reader.readLine();

@@ -14,8 +14,9 @@ import java.util.Map;
 
 public class Task1 {
     public static void main(String[] args) throws IOException {
-        String connectionString = System.getenv("mongodb.uri");
 
+        // Create MongoDB client
+        String connectionString = System.getenv("mongodb.uri");
         MongoClient mongo = MongoClients.create(connectionString);
 
         // Accessing newDB database for program 1
